@@ -1,0 +1,18 @@
+﻿@model Pelicula
+
+<p>
+    <a asp-controller="Peliculas"
+       asp-action="Index">Volver a Index</a>
+</p>
+
+<div class="card" style="width: 18rem;">
+    <img src="~/images/@Model.Foto" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Titulo</h5>
+        <p class="card-text">@Model.Genero</p>
+        <p class="card-text">@Model.Actores</p>
+        <p class="card-text">@Model.Argumento</p>
+    </div>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/@Model.YouTube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
