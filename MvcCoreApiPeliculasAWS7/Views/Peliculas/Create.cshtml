@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Genero" class="control-label"></label>
@@ -28,9 +28,8 @@
                 <span asp-validation-for="Argumento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Foto" class="control-label"></label>
-                <input asp-for="Foto" class="form-control" />
-                <span asp-validation-for="Foto" class="text-danger"></span>
+                <label class="control-label"></label>
+                <input type="file" name="file" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Actores" class="control-label"></label>
@@ -48,7 +47,9 @@
                 <span asp-validation-for="YouTube" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button class="btn btn-primary">
+                    guardar
+                </button>
             </div>
         </form>
     </div>
@@ -59,5 +60,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

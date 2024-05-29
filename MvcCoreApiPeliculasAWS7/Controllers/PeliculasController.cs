@@ -7,10 +7,13 @@ namespace MvcCoreApiPeliculasAWS7.Controllers
     public class PeliculasController : Controller
     {
         private ServiceApiPeliculas service;
+        private ServiceStorageAWS serviceBucket;
 
-        public PeliculasController(ServiceApiPeliculas service)
+        public PeliculasController(ServiceApiPeliculas service,
+            ServiceStorageAWS serviceBucket)
         {
             this.service = service;
+            this.serviceBucket = serviceBucket;
         }
 
         public async Task<IActionResult> Index()
@@ -28,10 +31,10 @@ namespace MvcCoreApiPeliculasAWS7.Controllers
         [HttpPost]
         public async Task<IActionResult> PeliculasActor(string actor)
         {
-                List<Pelicula> peliculas =
-                    await this.service
-                    .GetPeliculasActoresAsync(actor);
-                return View(peliculas);
+            List<Pelicula> peliculas =
+                await this.service
+                .GetPeliculasActoresAsync(actor);
+            return View(peliculas);
         }
 
         public async Task<IActionResult> Details(int id)
@@ -46,8 +49,16 @@ namespace MvcCoreApiPeliculasAWS7.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Pelicula pelicula)
+        public async Task<IActionResult> Create(Pelicula pelicula, IFormFile file)
         {
+            pelicula.Foto = file.FileName;
+
+            using (Stream stream = file.OpenReadStream())
+            {
+
+                await this.serviceBucket.UploadFileAsync(file.FileName, stream);
+            }
+
             await this.service.CreatePeliculaAsync(pelicula);
             return RedirectToAction("Index");
         }

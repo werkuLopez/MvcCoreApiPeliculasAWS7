@@ -1,5 +1,7 @@
 ﻿@model List<Pelicula>
-
+@{
+    string urlsBucket = keys.BucketUrl;
+}
 <h1>Peliculas AWS Api Gateway</h1>
 
 <p>
@@ -22,14 +24,14 @@
             <tr>
                 <td>@peli.Titulo</td>
                 <td>
-                    <img src="~/images/@peli.Foto"
-                    style="width:70px; height: 80px"/>
+                    <img src="@(urlsBucket + peli.Foto)"
+                         style="width:70px; height: 80px" />
                 </td>
                 <td>
                     <a asp-controller="Peliculas"
-                        asp-action="Details"
-                        asp-route-id="@peli.IdPelicula"
-                        class="btn btn-success">Details</a>
+                       asp-action="Details"
+                       asp-route-id="@peli.IdPelicula"
+                       class="btn btn-success">Details</a>
                     <a asp-controller="Peliculas"
                        asp-action="Edit"
                        asp-route-id="@peli.IdPelicula"

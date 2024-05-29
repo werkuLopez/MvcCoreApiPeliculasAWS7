@@ -9,10 +9,10 @@ namespace MvcCoreApiPeliculasAWS7.Services
         private string UrlApi;
         private MediaTypeWithQualityHeaderValue header;
 
-        public ServiceApiPeliculas(IConfiguration configuration)
+        public ServiceApiPeliculas(keysModel keys)
         {
-            this.UrlApi = configuration.GetValue<string>
-                ("ApiUrls:ApiPeliculasAWS");
+            this.UrlApi = keys.ApiPeliculas;
+
             this.header = new MediaTypeWithQualityHeaderValue
                 ("application/json");
         }
@@ -45,7 +45,7 @@ namespace MvcCoreApiPeliculasAWS7.Services
             return data;
         }
 
-        public async Task<List<Pelicula>> 
+        public async Task<List<Pelicula>>
             GetPeliculasActoresAsync(string actor)
         {
             string request = "api/peliculas/peliculasActor/" + actor;
@@ -54,7 +54,7 @@ namespace MvcCoreApiPeliculasAWS7.Services
             return data;
         }
 
-        public async Task<Pelicula> 
+        public async Task<Pelicula>
             FindPelicula(int id)
         {
             string request = "api/peliculas/" + id;
@@ -70,6 +70,7 @@ namespace MvcCoreApiPeliculasAWS7.Services
                 string request = "api/peliculas";
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(this.header);
+                pelicula.IdPelicula = 1;
                 string json = JsonConvert.SerializeObject(pelicula);
                 StringContent content =
                     new StringContent(json, this.header);
@@ -83,7 +84,7 @@ namespace MvcCoreApiPeliculasAWS7.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string request = "api/peliculas";
+                string request = "api/Peliculas";
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(this.header);
                 string json = JsonConvert.SerializeObject(pelicula);
